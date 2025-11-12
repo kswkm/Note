@@ -1,0 +1,105 @@
+사용자 입력: www.google.com
+DNS 변환 → 142.250.190.68
+브라우저가 해당 IP로 접속
+
+
+1️⃣ A 레코드 (Address Record)
+목적: 도메인 이름 → IPv4 주소 매핑
+www.example.com  A  93.184.216.34
+즉, www.example.com에 접속하면 이 IPv4 주소로 연결된다는 의미
+
+
+2️⃣ AAAA 레코드 (IPv6 Address Record)
+목적: 도메인 이름 → IPv6 주소 매핑
+www.example.com  AAAA  2606:2800:220:1:248:1893:25c8:1946
+IPv4가 아닌 IPv6 전용 주소를 사용
+
+
+3️⃣ NS 레코드 (Name Server Record)
+목적: 특정 도메인을 관리하는 권한 있는 DNS 서버(NS)를 지정
+xample.com  NS  ns1.example.com
+example.com  NS  ns2.example.com
+도메인 이름을 물어봤을 때 어느 서버에 질의해야 하는지 알려줌
+
+
+4️⃣ MX 레코드 (Mail Exchange Record)
+목적: 특정 도메인의 메일 서버 지정
+example.com  MX  10 mail1.example.com
+example.com  MX  20 mail2.example.com
+숫자(우선순위) 값이 낮을수록 우선적으로 메일을 받음
+
+
+#IP 주소는 항상 같은가?
+= 상황에 따라 달라질 수 있다.
+<DHCP 사용>
+DNS 서버를 포함한 네트워크 장치가 DHCP로 IP를 자동 할당받으면 재부팅, 재연결 시 IP가 바뀔 수 있음
+
+<ISP 구성 변경>
+ISP가 DNS 서버를 교체하거나 부하 분산을 위해 IP를 변경할 수 있음
+
+캐시/부하 분산(CDN)
+DNS 요청 시 가까운 서버로 라우팅할 수 있으므로 클라이언트마다 다른 IP를 받는 경우도 있음
+정리하면, DNS 서버 IP는 고정일 수도 있고, 상황에 따라 변할 수도 있습니다.
+공인 DNS 서버(예: 8.8.8.8, 1.1.1.1)는 고정 IP지만, ISP 내부 DNS 서버는 변할 가능성이 높습니다.
+
+
+✅ 핵심
+IP 주소 = 장치를 식별하는 주소
+DNS 서버 IP = 클라이언트가 질의 보내는 서버
+고정일 수도 있고 DHCP/부하분산 환경에 따라 변할 수도 있음
+
+
+
+#ping www.icann.org
+Ping www.icann.org.cdn.cloudflare.net [2606:4700::6812:25d] 32바이트 데이터 사용:
+2606:4700::6812:25d의 응답: 시간=24ms
+2606:4700::6812:25d의 응답: 시간=347ms
+2606:4700::6812:25d의 응답: 시간=256ms
+2606:4700::6812:25d의 응답: 시간=267ms
+
+2606:4700::6812:25d에 대한 Ping 통계:
+    패킷: 보냄 = 4, 받음 = 4, 손실 = 0 (0% 손실),
+왕복 시간(밀리초):
+    최소 = 24ms, 최대 = 347ms, 평균 = 223ms
+
+
+-Ping 명령어 → 대상 호스트 연결 상태와 응답 시간 확인
+-응답 시간(ms) → 네트워크 지연 정도 확인
+-0% 패킷 손실 → 연결 안정적
+-CDN 사용 시, 실제 서버 이름과 도메인이 다를 수 있음
+
+
+
+#nslookup
+기본 서버:  10.nate.com
+Address:  10.183.218.27
+
+> www.cisco.com
+서버:    10.nate.com
+Address:  10.183.218.27
+#여러분의 컴퓨터가 www.cisco.com의 IP 주소를 알고 싶을 때 조회 요청을 보내는 DNS 서버가 10.nate.com입니다.
+
+권한 없는 응답:
+이름:    e2867.dsca.akamaiedge.net
+Addresses:  2600:1410:d000:2a3::b33
+          2600:1410:d000:2b0::b33
+          2.16.176.106
+Aliases:  www.cisco.com
+          www.cisco.com.akadns.net
+          wwwds.cisco.com.edgekey.net
+          wwwds.cisco.com.edgekey.net.globalredir.akadns.net
+
+> 2.16.176.106
+서버:    10.nate.com
+Address:  10.183.218.27
+
+이름:    a2-16-176-106.deploy.static.akamaitechnologies.com
+Address:  2.16.176.106
+
+
+-정방향 조회(Forward Lookup): 도메인 → IP (www.cisco.com → 2.16.176.106)
+-역방향 조회(Reverse Lookup): IP → 도메인 (2.16.176.106 → a2-16-176-106.deploy.static.akamaitechnologies.com)
+-권한 없는 응답: 요청한 DNS 서버가 직접 관리하는 레코드가 아니고 캐시된 정보 제공
+-Aliases(CNAME): 실제 서버와 다른 여러 이름이 존재할 수 있음 (특히 CDN 사용 시)
+
+

@@ -1,0 +1,26 @@
+#컴퓨터 네트워크에서 통신 기능을 계층별로 나눈 표준 모델
+OSI 7계층 구조(Open Systems Interconnection 7-layer model)
+계층 번호	 계층 이름	                                  주요 역할	                                             프로토콜/예시
+7	응용 계층(Application Layer)	    사용자와 네트워크 간 인터페이스 제공, 애플리케이션 통신 지원	  HTTP, HTTPS, FTP, DNS, DHCP, SMTP
+6	표현 계층(Presentation Layer)	    데이터 형식 변환, 인코딩/디코딩, 암호화/복호화	                 JPEG, GIF, SSL/TLS, MPEG
+5	세션 계층(Session Layer)	        애플리케이션 간 세션 관리, 연결 설정/유지/종료	                 NetBIOS, RPC
+4	전송 계층(Transport Layer)	        호스트 간 신뢰성 있는 데이터 전송, 흐름/혼잡 제어	             TCP, UDP
+3	네트워크 계층(Network Layer)	    논리적 주소(IP)를 사용하여 목적지까지 패킷 전달	                 IP, ICMP, IPv6
+2	데이터 링크 계층(Data Link Layer)	물리적 주소(MAC) 사용, 프레임 단위 전송, 오류 검출	             Ethernet, ARP, PPP, Switch
+1	물리 계층(Physical Layer)	        실제 전송 매체를 통한 비트 전송	                                케이블, RJ-45, 허브, 전기 신호, 광신호
+
+
+#계층별 흐름
+데이터 송신: 애플리케이션 → 표현 → 세션 → 전송 → 네트워크 → 데이터 링크 → 물리 계층 → 네트워크 전송
+데이터 수신: 물리 → 데이터 링크 → 네트워크 → 전송 → 세션 → 표현 → 애플리케이션
+
+
+#계층 별 핵심 특징
+응용 계층: 사용자 애플리케이션과 직접 연결
+(표현 계층)
+(세션 계층)
+전송 계층: TCP/UDP, 호스트 간 신뢰성 보장
+네트워크 계층: IP 주소, 라우팅 결정
+데이터 링크 계층: MAC 주소, 스위치/프레임 단위 전송
+물리 계층: 비트 전송, 케이블/신호
+
