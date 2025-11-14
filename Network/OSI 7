@@ -24,3 +24,13 @@ OSI 7계층 구조(Open Systems Interconnection 7-layer model)
 데이터 링크 계층: MAC 주소, 스위치/프레임 단위 전송
 물리 계층: 비트 전송, 케이블/신호
 
+
+#계층별 데이터 단위 정리
+7~5 계층	           데이터(Data)
+4계층 (TCP/UDP)	       세그먼트(Segment)
+3계층 (IP)	           패킷(Packet)
+2계층 (Ethernet, MAC)  프레임(Frame)
+1계층 (물리)	       비트(Bit)
+
+
+
