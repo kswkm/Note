@@ -120,3 +120,32 @@ PID는 무엇인지
 프로세스 모니터링(htop)
 
 
+# gcc (GNU Compiler Collection)
+**gcc는 C/C++ 등 코드를 ELF 실행 파일로 컴파일하는 프로그램(컴파일러)**이야.
+
+<gcc가 하는 일 과정>
+✔ 1) Preprocessing (전처리)
+include, #define 처리
+결과: 확장된 .i 파일
+
+✔ 2) Compilation (컴파일)
+C 코드를 어셈블리로 변환
+결과: .s 파일
+
+✔ 3) Assembly (어셈블)
+어셈블리를 기계어로 변환
+결과: .o (ELF 오브젝트 파일)
+
+✔ 4) Linking (링킹)
+여러 .o 파일이나 라이브러리(.so)를 결합
+최종 ELF 실행 파일 생성
+
+
+
+#실행 가능 파일 만들기 &gcc
+1. cat > hello.c << EOF     -> hello.c 파일 생성(+바로 파일 안에 C코드 적기)
+2. 프로그램 C언어 코드 작성
+3. EOF + Enter = 저장 및 파일 나가기
+4. gcc -o hello hello.c     -> hello.c 컴파일해서 hello 실행 파일 생성
+5. ./hello                  -> hello 실행 파일 실행 
+
