@@ -44,3 +44,73 @@ fork()는 전체 메모리를 복사하는 것처럼 보이지만…
 📌 실제로는 복사하지 않음! (쓰기 전까지 공유함)
 → 그래서 포크 비용이 매우 저렴하고 빠름.
 
+
+#프로세스 관리 명령어
+프로세스 확인(ps, htop)
+ > ps
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    139       8     1744       9804              9652   0 AggregatorHost
+    391      20    13192      29140       0.81   4552   1 aihost
+    499      31    35096      63308       1.00   9740   1 AIXHost
+    302      16    12384      33008       1.78  16704   1 AppActions
+    451      28    56388      64324       2.42  20436   1 ApplicationFrameHost
+
+📌 1. Handles
+해당 프로세스가 열고 있는 핸들의 개수
+(파일, 레지스트리, 스레드, 소켓 등 OS 자원)
+
+📌 2. NPM(K)
+Non-Paged Memory
+→ 디스크로 스왑될 수 없는, 반드시 RAM에 남아있어야 하는 커널 메모리
+단위: KB
+
+📌 3. PM(K)
+Paged Memory
+→ 페이지 파일(Pagefile)로 스왑 가능한 메모리
+(프로세스가 사용 중인 가상 메모리의 일부)
+
+📌 4. WS(K)
+Working Set Memory
+→ 프로세스가 실제로 RAM에서 사용 중인 메모리량
+WS(Working Set)가 클수록 지금 실제로 많이 사용하는 상태.
+
+📌 5. CPU(s)
+프로세스가 실행되면서 누적해서 사용한 CPU 시간 (초)
+0.81 → CPU 0.81초 사용했다는 의미
+
+📌 6. Id
+PID (Process ID)
+프로세스를 구분하는 고유 번호
+예: AggregatorHost → PID 9652
+aihost → PID 4552
+
+📌 7. SI
+Session ID (세션 ID)
+1 → 사용자 세션
+0 → 서비스 세션 (SYSTEM 계정)
+즉:
+SI = 0 → 시스템 서비스
+SI = 1 → 사용자가 실행한 프로세스
+
+📌 8. ProcessName
+프로세스 실행 파일 이름
+예: AggregatorHost, aihost, AIXHost 등
+
+📌 전체 의미 요약
+각 줄은 "프로세스 하나"를 의미하며,
+해당 프로세스가: 얼마나 많은 OS 자원을 잡고 있는지(Handles, Memory)
+CPU를 얼마나 사용했는지
+어떤 세션에서 실행되는지
+PID는 무엇인지
+이 정보를 보여주는 리스트다.
+
+
+
+포그라운드와 백그라운드(fg, bg, jobs)
+프로세스 종료(kill, pkill)
+프로세스 우선 순위(nice)
+프로세스 모니터링(htop)
+
+
