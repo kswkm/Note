@@ -149,3 +149,22 @@ C 코드를 어셈블리로 변환
 4. gcc -o hello hello.c     -> hello.c 컴파일해서 hello 실행 파일 생성
 5. ./hello                  -> hello 실행 파일 실행 
 
+
+#환경 변수
+환경 변수(Environment Variable)는 컴퓨터에서 실행 중인 프로세스의 동작 방식에 영향을 미치는 값이며 사용자가 임의로 정의할 수 있습니다. 
+환경 변수는 일반적으로 키-값(Key-Value) 쌍의 형태로 구성되며 시스템 및 프로그램의 설정이나 동작에 필요한 정보를 전달하는 데 사용됩니다.
+특정 디렉토리 경로, 사용자 이름, 시스템 환경 설정, 또는 응용 프로그램이 참조할 API 키 등을 환경 변수로 지정할 수 있습니다.
+터미널에서 sh만 입력해도 /bin/sh가 실행되는 이유는 PATH 환경 변수에 /bin이 포함되어 있기 때문입니다. 
+
+=/PATH=/usr/local/bin:/usr/sbin:/usr/bin
+=/usr/local/bin/+sh: not found
+=/usr/sbin/     +sh: not found
+=/usr/bin/      +sh: found -> /usr/bin/sh 실행
+
+환경 변수 확인(env) -> env [옵션] [NAME=VALUE(환경 변수)] [명령어]
+*env -i [env1] [env2] ... [env n] [파일 이름]을 사용할 경우 설정한 환경변수만 사용합니다.
+
+환경 변수 설정(export) -> export [key=value(환경 변수)]
+환경 변수의 값에 접근하는 방법은 $[환경 변수 KEY]입니다. 
+
+환경 변수 삭제(unset) -> unset [환경 변수 KEY]
