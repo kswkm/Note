@@ -48,4 +48,3 @@ dpkg -l
 apt [옵션] [명령어]
 apt는 advanced package tool의 약자이며 특정 명령어(install, update 등)는 root만 사용 가능합니다.
 
-
