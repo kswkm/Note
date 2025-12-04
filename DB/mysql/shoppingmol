@@ -1,0 +1,130 @@
+#주제: 쇼핑몰
+
+#데이터 테이블 5개
+① users (회원 정보)
+PK: user_id
+쇼핑몰 이용자 정보를 저장
+주문과 1:N 관계
+
+② products (상품 정보)
+PK: product_id
+판매 상품 기본 정보
+카테고리와 N:1 관계
+
+③ categories (카테고리)
+PK: category_id
+상품을 분류하기 위한 테이블
+products 테이블에서 FK로 참조
+
+④ orders (주문 정보)
+PK: order_id
+“누가(user_id)” 주문했는지
+“언제 주문했는지”
+users와 1:N 관계
+
+⑤ order_items (주문 상세 상품)
+PK: order_item_id
+orders의 하위 개념
+1개의 주문 안에 여러 제품이 들어갈 수 있음
+FK: order_id, product_id
+orders와 1:N
+products와 N:1
+
+
+✅ 📌 테이블 1: user
+사용자 정보 테이블
+컬럼명	타입	설명
+user_id (PK)	INT	사용자 고유 번호
+password	VARCHAR(100)	로그인 비밀번호 저장용(실제는 해시값)
+email	VARCHAR(100)	사용자 이메일(로그인/연락용)
+✔ PK: user_id
+✔ 다른 테이블에서 참조됨
+
+✅ 📌 테이블 2: categories
+상품 카테고리 테이블
+컬럼명	타입	설명
+category_id (PK)	INT	카테고리 고유 번호
+category_name	VARCHAR(50)	카테고리명(예: clothing, shoes 등)
+✔ PK: category_id
+
+✅ 📌 테이블 3: products
+상품 정보 테이블
+컬럼명	타입	설명
+product_id (PK)	INT	상품 고유 번호
+product_name	VARCHAR(100)	상품명
+price	INT	가격
+status	VARCHAR(20)	판매 상태(예: active / sold_out 등)
+category_id (FK)	INT	categories.category_id 참조
+✔ PK: product_id
+✔ FK: category_id → categories(category_id)
+
+✅ 📌 테이블 4: orders
+주문 테이블
+컬럼명	타입	설명
+order_id (PK)	INT	주문 고유 번호
+user_id (FK)	INT	주문한 사용자 ID → users.user_id
+status	VARCHAR(20)	주문 상태(예: pending, paid, cancelled)
+✔ PK: order_id
+✔ FK: user_id → users(user_id)
+
+✅ 📌 테이블 5: order_items
+주문 상세(어떤 상품이 주문되었는지)
+컬럼명	타입	설명
+order_item_id (PK)	INT	주문 상세 번호
+order_id (FK)	INT	orders.order_id 참조
+product_id (FK)	INT	products.product_id 참조
+✔ PK: order_item_id
+✔ FK1: order_id → orders(order_id)
+✔ FK2: product_id → products(product_id)
+
+🎯 전체 구조 요약
+users (1) ───< orders (N) ───< order_items (N)
+products (1) ───< order_items (N)
+categories (1) ───< products (N)
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+dbdiagram(ERD) ->  https://dbdiagram.io/d/693117e3d6676488ba862724 
+Table users {
+  user_id int [pk, increment]
+  password varchar(255)
+  email varchar(100)
+}
+
+Table categories {
+  category_id int [pk, increment]
+  category_name varchar(50)
+}
+
+Table products {
+  product_id int [pk, increment]
+  product_name varchar(100)
+  price decimal(10,2)
+  status enum('ACTIVE', 'INACTIVE')
+  category_id int
+}
+
+Ref: products.category_id > categories.category_id
+
+Table orders {
+  order_id int [pk, increment]
+  user_id int
+  status enum('PENDING', 'PAID', 'SHIPPED', 'CANCELLED')
+}
+
+Ref: orders.user_id > users.user_id
+
+Table order_items {
+  order_item_id int [pk, increment]
+  order_id int
+  product_id int
+}
+
+Ref: order_items.order_id > orders.order_id
+Ref: order_items.product_id > products.product_id
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+
